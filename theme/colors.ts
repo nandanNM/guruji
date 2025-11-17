@@ -4,7 +4,7 @@ const lightColors = {
   foreground: "#000000",
 
   // Card colors
-  card: "#F2F2F7",
+  card: "#F1F5F9",
   cardForeground: "#000000",
 
   // Popover colors

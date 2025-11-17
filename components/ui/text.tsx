@@ -25,7 +25,7 @@ interface TextProps extends RNTextProps {
 export const Text = forwardRef<RNText, TextProps>(
   (
     { variant = "body", lightColor, darkColor, style, children, ...props },
-    ref
+    ref,
   ) => {
     const textColor = useColor("text", { light: lightColor, dark: darkColor });
     const mutedColor = useColor("textMuted");
@@ -82,7 +82,7 @@ export const Text = forwardRef<RNText, TextProps>(
         {children}
       </RNText>
     );
-  }
+  },
 );
 
 Text.displayName = "Text";
