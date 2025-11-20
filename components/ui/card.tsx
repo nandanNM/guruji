@@ -21,7 +21,7 @@ export function Card({ children, style }: CardProps) {
           width: "100%",
           backgroundColor: cardColor,
           borderRadius: BORDER_RADIUS,
-          padding: 16,
+          padding: 14,
           shadowColor: foregroundColor,
           borderWidth: 1,
           borderColor: borderColor,

@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { Text as NText } from "@/components/ui/text";
 import { useColor } from "@/hooks/useColor";
-import { JourneyItem } from "./JourneyCard";
+import { JourneyItem } from "@/types";
 
 interface GroupedListProps {
   items: JourneyItem[];

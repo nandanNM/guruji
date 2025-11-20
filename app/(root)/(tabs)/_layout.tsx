@@ -47,7 +47,7 @@ const TabsLayout = () => {
         })}
       </NativeTabs.Trigger>
 
-      <NativeTabs.Trigger name="explore">
+      <NativeTabs.Trigger name="challenge">
         <Label>Explore</Label>
         {Platform.select({
           ios: (

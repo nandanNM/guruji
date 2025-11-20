@@ -4,38 +4,11 @@ import { StyleSheet, View } from "react-native";
 import { Card } from "@/components/ui/card";
 import { Text as NText } from "@/components/ui/text";
 import { useColor } from "@/hooks/useColor";
-
-interface CodingStats {
-  totalSolved: number;
-  totalProblems: number;
-  acceptanceRate: number;
-  easy: {
-    solved: number;
-    total: number;
-    attempting: number;
-    unsolved: number;
-    accepted: number;
-  };
-  medium: {
-    solved: number;
-    total: number;
-    attempting: number;
-    unsolved: number;
-    accepted: number;
-  };
-  hard: {
-    solved: number;
-    total: number;
-    attempting: number;
-    unsolved: number;
-    accepted: number;
-  };
-}
+import { CodingStats } from "@/types";
 
 interface CodingSummaryCardProps {
   stats: CodingStats;
 }
-
 const ProgressBar = ({
   progress,
   color,
@@ -79,11 +52,10 @@ const DifficultyRow = ({
 
   return (
     <View style={styles.difficultyRow}>
-      {/* Label Row */}
+      {/* Label: Easy / Medium / Hard */}
       <View style={styles.difficultyHeader}>
-        <NText style={[styles.difficultyLabel, { color: color }]}>
-          {label}
-        </NText>
+        <NText style={[styles.difficultyLabel, { color }]}>{label}</NText>
+
         <NText style={[styles.difficultyCount, { color: textColor }]}>
           <NText style={{ fontWeight: "bold" }}>{solved}</NText>/{total} solved
         </NText>
@@ -93,10 +65,10 @@ const DifficultyRow = ({
       <ProgressBar
         progress={progress}
         color={color}
-        trackColor={`${color}20`} // 20 is hex opacity (~12%)
+        trackColor={`${color}20`}
       />
 
-      {/* Stats Footer */}
+      {/* Attempting / Unsolved / Accepted */}
       <View style={styles.statsFooter}>
         <NText style={[styles.statsText, { color: mutedColor }]}>
           Attempting {stats.attempting} • Unsolved {stats.unsolved} • Accepted{" "}
@@ -108,23 +80,24 @@ const DifficultyRow = ({
 };
 
 const CodingSummaryCard = ({ stats }: CodingSummaryCardProps) => {
-  const backgroundColor = useColor("card"); // or 'background' depending on your theme
+  const backgroundColor = useColor("card");
   const borderColor = useColor("border");
   const textColor = useColor("text");
   const mutedColor = useColor("textMuted");
 
-  const greenColor = useColor("green"); // For Easy
-  const yellowColor = useColor("yellow"); // For Medium (looks orange/yellow in image)
-  const redColor = useColor("red"); // For Hard
+  const greenColor = useColor("green");
+  const yellowColor = useColor("yellow");
+  const redColor = useColor("red");
 
   return (
     <Card style={styles.card}>
-      {/* Header Section */}
+      {/* Header */}
       <View style={styles.header}>
         <View>
           <NText style={[styles.headerLabel, { color: mutedColor }]}>
             Total Solved
           </NText>
+
           <NText style={[styles.totalCount, { color: textColor }]}>
             {stats.totalSolved}
             <NText style={[styles.totalTotal, { color: mutedColor }]}>
@@ -141,6 +114,7 @@ const CodingSummaryCard = ({ stats }: CodingSummaryCardProps) => {
             ]}>
             Acceptance
           </NText>
+
           <NText style={[styles.acceptanceRate, { color: redColor }]}>
             {stats.acceptanceRate}%
           </NText>
@@ -150,7 +124,7 @@ const CodingSummaryCard = ({ stats }: CodingSummaryCardProps) => {
       {/* Divider */}
       <View style={[styles.divider, { backgroundColor: borderColor }]} />
 
-      {/* Difficulty Sections */}
+      {/* Difficulty Rows */}
       <View style={styles.difficultiesContainer}>
         <DifficultyRow
           label="Easy"
@@ -166,7 +140,7 @@ const CodingSummaryCard = ({ stats }: CodingSummaryCardProps) => {
           label="Medium"
           solved={stats.medium.solved}
           total={stats.medium.total}
-          color={yellowColor} // Using yellow to match "Medium" usually
+          color={yellowColor}
           stats={stats.medium}
           textColor={textColor}
           mutedColor={mutedColor}
@@ -187,14 +161,11 @@ const CodingSummaryCard = ({ stats }: CodingSummaryCardProps) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
-    padding: 20,
-  },
-  // Header
+  card: { padding: 20 },
+
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
     marginBottom: 16,
   },
   headerLabel: {
@@ -210,13 +181,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Poppins-Regular",
   },
-  acceptanceContainer: {
-    alignItems: "flex-end",
-  },
-  acceptanceRate: {
-    fontSize: 18,
-    fontFamily: "Poppins-Bold",
-  },
+  acceptanceContainer: { alignItems: "flex-end" },
+  acceptanceRate: { fontSize: 18, fontFamily: "Poppins-Bold" },
 
   divider: {
     height: 1,
@@ -225,32 +191,17 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
 
-  // Difficulties
-  difficultiesContainer: {
-    gap: 2,
-  },
-  difficultyRow: {
-    gap: 4,
-  },
+  difficultiesContainer: { gap: 2 },
+  difficultyRow: { gap: 4 },
   difficultyHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
-  difficultyLabel: {
-    fontSize: 14,
-    fontFamily: "Poppins-Bold",
-  },
-  difficultyCount: {
-    fontSize: 12,
-    fontFamily: "Poppins-Regular",
-    opacity: 1,
-  },
+  difficultyLabel: { fontSize: 14, fontFamily: "Poppins-Bold" },
+  difficultyCount: { fontSize: 12, fontFamily: "Poppins-Regular" },
 
-  // Progress Bar
   progressTrack: {
     height: 8,
-    width: "100%",
     borderRadius: 4,
     overflow: "hidden",
   },
@@ -259,10 +210,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 
-  // Stats Footer
-  statsFooter: {
-    marginTop: 0,
-  },
+  statsFooter: {},
   statsText: {
     fontSize: 11,
     fontFamily: "Poppins-Regular",

@@ -7,41 +7,27 @@ import { Icon } from "@/components/ui/icon";
 import { Text as NText } from "@/components/ui/text";
 import { useColor } from "@/hooks/useColor";
 import { FONT_SIZE } from "@/theme/globals";
-import Ionicons from "@expo/vector-icons/Ionicons";
+
+import { HomeChallenge } from "@/types";
 import { Badge } from "./badge";
 import { Button } from "./ui/button";
-type IoniconName = keyof typeof Ionicons.glyphMap;
-interface Challenge {
-  id: string;
-  number: number;
-  title: string;
-  badge: IoniconName | null;
-  isActive: boolean;
-  endDate: string;
-}
 
 interface ChallengeCardProps {
-  challenge: Challenge;
+  challenge: HomeChallenge;
   onPress: () => void;
 }
 
 const ChallengeCard = ({ challenge, onPress }: ChallengeCardProps) => {
-  const cardColor = useColor("card");
-  const borderColor = useColor("border");
   const textColor = useColor("text");
   const textColorMuted = useColor("textMuted");
-  const primaryColor = useColor("primary"); // Used for the number badge background
-  const greenColor = useColor("green"); // Used for the 'Active' tag
-
-  // Specific color for the Spark badge text
-  const sparkBadgeColor = useColor("red"); // Assuming Spark uses the red/destructive color for contrast
+  const primaryColor = useColor("primary");
 
   return (
     <Card style={styles.challengeCard}>
-      {/* TOP ROW: Number Badge, Title, Active Tag */}
+      {/* TOP ROW */}
       <View style={styles.challengeHeader}>
         <View style={styles.challengeTitleRow}>
-          {/* Number Badge (1, 2, 3) */}
+          {/* Number Badge */}
           <Badge
             style={{
               backgroundColor: primaryColor + "30",
@@ -52,15 +38,8 @@ const ChallengeCard = ({ challenge, onPress }: ChallengeCardProps) => {
             variant="secondary">
             {challenge.number}
           </Badge>
-          {/* <View
-            style={[
-              styles.challengeNumberBadge,
-              { backgroundColor: primaryColor },
-            ]}>
-            <NText style={styles.challengeNumber}>{challenge.number}</NText>
-          </View> */}
 
-          {/* Title with Badge/Highlight */}
+          {/* Title */}
           <NText style={[styles.challengeTitle, { color: textColor }]}>
             {challenge.title}
           </NText>
@@ -68,21 +47,13 @@ const ChallengeCard = ({ challenge, onPress }: ChallengeCardProps) => {
 
         {/* Active Tag */}
         {challenge.isActive && (
-          // <View style={[styles.activeTag, { backgroundColor: "#DCFCE7" }]}>
-          //   {" "}
-          //   {/* Light green background for Active tag */}
-          //   <Icon name={Zap} size={14} color={greenColor} />
-          //   <NText style={[styles.activeText, { color: greenColor }]}>
-          //     Active
-          //   </NText>
-          // </View>
           <Badge icon="flash" variant="default">
             Active
           </Badge>
         )}
       </View>
 
-      {/* FOOTER ROW: Date and Join Button */}
+      {/* FOOTER */}
       <View style={styles.challengeFooter}>
         <View style={styles.dateContainer}>
           <Icon name={Calendar} size={14} color={textColorMuted} />
@@ -91,7 +62,7 @@ const ChallengeCard = ({ challenge, onPress }: ChallengeCardProps) => {
           </NText>
         </View>
 
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" onPress={onPress}>
           <NText
             style={[
               styles.joinButtonText,
@@ -125,51 +96,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexShrink: 1,
   },
-  challengeNumberBadge: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 12,
-  },
-  challengeNumber: {
-    color: "#FFFFFF",
-    fontSize: 12,
-    fontWeight: "700",
-  },
   challengeTitle: {
     fontSize: 16,
     fontWeight: "700",
     flexShrink: 1,
-  },
-  challengeTitleHighlight: {
-    fontSize: 16,
-    fontWeight: "900", // Making the last word extra bold
-  },
-  challengeBadge: {
-    // This styling is for the background pill that holds the 'Spark' text
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
-    marginLeft: 4,
-  },
-  challengeBadgeText: {
-    fontSize: 16,
-    fontWeight: "700",
-  },
-  activeTag: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginLeft: 10,
-  },
-  activeText: {
-    fontSize: 12,
-    fontWeight: "700",
-    marginLeft: 4,
   },
   challengeFooter: {
     flexDirection: "row",
@@ -184,11 +114,6 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 11,
     fontWeight: "500",
-  },
-  joinButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
   },
   joinButtonText: {
     fontWeight: "700",

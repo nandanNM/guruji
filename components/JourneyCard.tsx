@@ -7,18 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { Text as NText } from "@/components/ui/text";
 import { useColor } from "@/hooks/useColor";
-import { Colors } from "@/theme/colors";
-
-type IoniconName = keyof typeof Ionicons.glyphMap;
-type ColorKey = keyof typeof Colors.light;
-
-export interface JourneyItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  icon: IoniconName;
-  iconColor: ColorKey;
-}
+import { JourneyItem } from "@/types";
 
 interface JourneyCardProps {
   item: JourneyItem;
