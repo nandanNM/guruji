@@ -8,12 +8,12 @@ import { Text as NText } from "@/components/ui/text";
 import { useColor } from "@/hooks/useColor";
 import { FullChallenge } from "@/types";
 
-interface ChallengeCardProps {
+interface FullChallengeCardProps {
   challenge: FullChallenge;
   onPress?: () => void;
 }
 
-const ChallengeCard = ({ challenge, onPress }: ChallengeCardProps) => {
+const FullChallengeCard = ({ challenge, onPress }: FullChallengeCardProps) => {
   // --- Theme Colors ---
   const borderColor = useColor("border");
   const textColor = useColor("text");
@@ -229,4 +229,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChallengeCard;
+export default FullChallengeCard;
+

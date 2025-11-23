@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import ChallengeCard from "@/components/Test";
+import FullChallengeCard from "@/components/challenges/FullChallengeCard";
 import { Text as NText } from "@/components/ui/text";
 import { fullChallenges } from "@/constants/data";
 import { useColor } from "@/hooks/useColor";
@@ -57,7 +57,7 @@ const ChallengesScreen = () => {
           data={fullChallenges}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <ChallengeCard
+            <FullChallengeCard
               challenge={item}
               onPress={() => console.log("Pressed", item.title)}
             />

@@ -4,9 +4,9 @@ import React from "react";
 import { FlatList, Image, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import CodingSummaryCard from "@/components/CodingSummaryCard";
 import GroupedList from "@/components/GroupedList";
-import JourneyCard from "@/components/JourneyCard";
+import CodingSummaryCard from "@/components/profile/CodingSummaryCard";
+import JourneyCard from "@/components/profile/JourneyCard";
 
 import { Card } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";

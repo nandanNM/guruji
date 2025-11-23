@@ -9,8 +9,8 @@ import { useColor } from "@/hooks/useColor";
 import { FONT_SIZE } from "@/theme/globals";
 
 import { HomeChallenge } from "@/types";
-import { Badge } from "./badge";
-import { Button } from "./ui/button";
+import { Badge } from "../badge";
+import { Button } from "../ui/button";
 
 interface ChallengeCardProps {
   challenge: HomeChallenge;

@@ -9,9 +9,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import ChallengeCard from "@/components/ChallengeCard";
-import JourneyCard from "@/components/JourneyCard";
-import { FeaturedTestCard } from "@/components/TestCard";
+import ChallengeCard from "@/components/challenges/ChallengeCard";
+import JourneyCard from "@/components/profile/JourneyCard";
+import { FeaturedTestCard } from "@/components/tests/TestCard";
 import { Card } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { ModeToggle } from "@/components/ui/mode-toggle";
