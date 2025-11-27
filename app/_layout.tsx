@@ -1,4 +1,3 @@
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { Colors } from "@/theme/colors";
 import { ThemeProvider } from "@/theme/theme-provider";
 import { useFonts } from "expo-font";
@@ -6,12 +5,14 @@ import * as NavigationBar from "expo-navigation-bar";
 import { Stack } from "expo-router";
 import Head from "expo-router/head";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { setBackgroundColorAsync } from "expo-system-ui";
-import { useCallback, useEffect } from "react";
-import { Platform, StatusBar } from "react-native";
+import { useEffect } from "react";
+import { Platform, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+// Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
 
 SplashScreen.setOptions({
@@ -19,8 +20,37 @@ SplashScreen.setOptions({
   fade: true,
 });
 
+function InitialLayout() {
+  const isAuthenticated = false;
+  const isLoading = false;
+
+  if (isLoading) {
+    return null;
+  }
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      {isAuthenticated ? (
+        <>
+          <Stack.Screen name="(root)" />
+          <Stack.Screen name="+not-found" />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen
+            name="(root)"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen name="+not-found" />
+        </>
+      )}
+    </Stack>
+  );
+}
+
 export default function RootLayout() {
-  const colorScheme = useColorScheme() || "light";
   const [fontsLoaded] = useFonts({
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
     "Poppins-ExtraBold": require("../assets/fonts/Poppins-ExtraBold.ttf"),
@@ -30,12 +60,12 @@ export default function RootLayout() {
     "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
-  //  SPLASH HIDE  //
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
+  const colorScheme = useColorScheme() || "light";
 
   useEffect(() => {
     if (Platform.OS === "android") {
@@ -45,19 +75,16 @@ export default function RootLayout() {
     }
   }, [colorScheme]);
 
-  // Keep the root view background color in sync with the current theme
   useEffect(() => {
     setBackgroundColorAsync(
       colorScheme === "dark" ? Colors.dark.background : Colors.light.background,
     );
   }, [colorScheme]);
-  const onLayoutRootView = useCallback(() => {
-    SplashScreen.hideAsync();
-  }, []);
+
   if (!fontsLoaded) return null;
 
   return (
-    <GestureHandlerRootView onLayout={onLayoutRootView} style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {Platform.OS === "web" && (
         <Head>
           <meta name="color-scheme" content="light dark" />
@@ -65,31 +92,13 @@ export default function RootLayout() {
       )}
       <ThemeProvider>
         <SafeAreaProvider>
-          {/* <StatusBar
-            barStyle={colorScheme === "dark" ? "light" : "dark"}
+          <StatusBar
+            style={colorScheme === "dark" ? "light" : "dark"}
             animated
-          /> */}
-          <StatusBar barStyle="default" animated />
-          <AppNavigator />
+          />
+          <InitialLayout />
         </SafeAreaProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
-  );
-}
-
-function AppNavigator() {
-  const isAuthenticated = true;
-
-  return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="+not-found" />
-      {/* Public screens */}
-      <Stack.Screen name="(auth)" />
-
-      {/* Protected screens */}
-      <Stack.Protected guard={isAuthenticated}>
-        <Stack.Screen name="(root)" />
-      </Stack.Protected>
-    </Stack>
   );
 }

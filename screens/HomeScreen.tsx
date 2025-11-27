@@ -191,7 +191,7 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1 },
-  flatListContent: { paddingBottom: 100 },
+  flatListContent: { paddingBottom: 60 },
 
   // Top Bar
   topBar: {

@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
 
   // List padding
   listContent: {
-    paddingBottom: 100,
+    paddingBottom: 60,
   },
 });
 

@@ -155,7 +155,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1 },
-  flatListContent: { paddingHorizontal: 14, paddingBottom: 100 },
+  flatListContent: { paddingHorizontal: 14, paddingBottom: 60 },
 
   // Header
   headerContainer: { marginTop: 12 },

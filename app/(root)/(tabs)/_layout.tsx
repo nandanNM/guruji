@@ -1,159 +1,75 @@
+import CustomTabBar from "@/components/navigation/CustomTabBar";
 import { useColor } from "@/hooks/useColor";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {
-  Icon,
-  Label,
-  NativeTabs,
-  VectorIcon,
-} from "expo-router/unstable-native-tabs";
-import { Platform } from "react-native";
+import { Tabs } from "expo-router";
+import React from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const TabsLayout = () => {
+  // Get safe area insets
+  const insets = useSafeAreaInsets();
   const primaryColor = useColor("primary");
-  const backgroundColor = useColor("card");
+  const backgroundColor = useColor("background");
   const borderColor = useColor("border");
-  const textMuted = useColor("textMuted");
-  const text = useColor("text");
+  const textColor = useColor("text");
 
   return (
-    <NativeTabs
-      backgroundColor={backgroundColor}
-      tintColor={borderColor}
-      iconColor={{
-        default: textMuted,
-        selected: primaryColor,
-      }}
-      labelStyle={{
-        default: {
-          color: textMuted,
-          fontSize: 13,
+    <Tabs
+      tabBar={props => <CustomTabBar {...props} />}
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: backgroundColor,
+          borderBottomColor: borderColor,
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
         },
-        selected: {
-          color: primaryColor,
-          fontSize: 13,
+        headerTitleStyle: {
+          fontFamily: "Rubik-Bold",
+          color: textColor,
         },
-      }}
-      indicatorColor={borderColor}
-      minimizeBehavior="onScrollDown"
-      shadowColor="#000000"
-      disableTransparentOnScrollEdge={true}>
-      <NativeTabs.Trigger name="index">
-        <Label>Home</Label>
-        {Platform.select({
-          ios: (
-            <Icon
-              sf={{
-                default: "house",
-                selected: "house.fill", // Different icon when selected
-              }}
-            />
+      }}>
+      {/* Home Screen */}
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
           ),
-          android: <Icon src={<VectorIcon family={Ionicons} name="home" />} />,
-        })}
-      </NativeTabs.Trigger>
+        }}
+      />
 
-      <NativeTabs.Trigger name="challenge">
-        <Label>Explore</Label>
-        {Platform.select({
-          ios: (
-            <Icon
-              sf={{
-                default: "magnifyingglass",
-                selected: "magnifyingglass",
-              }}
-            />
+      <Tabs.Screen
+        name="challenge"
+        options={{
+          title: "Challenges",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="trophy-outline" size={size} color={color} />
           ),
-          android: (
-            <Icon src={<VectorIcon family={Ionicons} name="search" />} />
+        }}
+      />
+      <Tabs.Screen
+        name="problems"
+        options={{
+          title: "Problems",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="code-slash-outline" size={size} color={color} />
           ),
-        })}
-      </NativeTabs.Trigger>
-
-      <NativeTabs.Trigger name="profile">
-        <Label>Profile</Label>
-        {Platform.select({
-          ios: (
-            <Icon
-              sf={{
-                default: "person.crop.circle",
-                selected: "person.crop.circle.fill", // Filled version when selected
-              }}
-            />
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person-outline" size={size} color={color} />
           ),
-          android: (
-            <Icon src={<VectorIcon family={Ionicons} name="person" />} />
-          ),
-        })}
-      </NativeTabs.Trigger>
-    </NativeTabs>
+        }}
+      />
+    </Tabs>
   );
 };
 
 export default TabsLayout;
-// import Ionicons from "@expo/vector-icons/Ionicons";
-// import { Tabs } from "expo-router";
-// import { Platform } from "react-native";
-
-// export default function TabLayout() {
-//   return (
-//     <Tabs
-//       screenOptions={{
-//         tabBarActiveTintColor: "#007bff", // active color
-//         tabBarInactiveTintColor: "#5F6368", // inactive color
-//         tabBarStyle: {
-//           backgroundColor: "#F8F9FA",
-//           borderTopColor: "#e4e3e1",
-//         },
-//       }}>
-//       {/* HOME */}
-//       <Tabs.Screen
-//         name="index"
-//         options={{
-//           title: "Home",
-//           tabBarIcon: ({ color, focused }) =>
-//             Platform.OS === "ios" ? (
-//               <Ionicons
-//                 name={focused ? "home" : "home-outline"}
-//                 size={24}
-//                 color={color}
-//               />
-//             ) : (
-//               <Ionicons name="home-outline" size={24} color={color} />
-//             ),
-//         }}
-//       />
-
-//       {/* EXPLORE */}
-//       <Tabs.Screen
-//         name="challenge"
-//         options={{
-//           title: "Explore",
-//           tabBarIcon: ({ color }) =>
-//             Platform.OS === "ios" ? (
-//               <Ionicons name="search" size={24} color={color} />
-//             ) : (
-//               <Ionicons name="search" size={24} color={color} />
-//             ),
-//         }}
-//       />
-
-//       {/* PROFILE */}
-//       <Tabs.Screen
-//         name="profile"
-//         options={{
-//           title: "Profile",
-//           tabBarIcon: ({ color, focused }) =>
-//             Platform.OS === "ios" ? (
-//               <Ionicons
-//                 name={focused ? "person" : "person-outline"}
-//                 size={24}
-//                 color={color}
-//               />
-//             ) : (
-//               <Ionicons name="person-outline" size={24} color={color} />
-//             ),
-//         }}
-//       />
-//     </Tabs>
-//   );
-// }
